@@ -116,6 +116,19 @@ lang_df %>%
                             TRUE ~ "Unknown"))
 ```
 
+```{r}
+food_df = data.frame(name = c("dumpling", "potato", "pancake", "pizza", "sushi"))
+food_df %>% 
+  mutate(country = case_when(name %in% c("dumpling") ~ "Chinese food", 
+                             name %in% c("potato") ~ "Estonian food", 
+                             name %in% c("pancake") ~ "American food", 
+                             name %in% c("Pizza") ~ "Italian food", 
+                             name %in% c("sushi") ~ "Japanese food", 
+                             TRUE ~ "Unknown"))
+```
+
+
+
 \clearpage
 
 For loop (`for` and `rowwise`)
@@ -162,7 +175,7 @@ myaverage = function(myvec){
 ```
 
 ```{r}
-myvec = c(2, 3)
+myvec = c("a", "Estonian")
 myaverage(myvec)
 ```
 
@@ -326,8 +339,9 @@ ut_area_sim = ut_areas %>%
   map_dfr(., ~{subdata = .x %>% spread(., key = feature, value = value)
                expand.grid(lgs, lgs, stringsAsFactors = F) %>%
                  rowwise() %>%
-                 mutate(similarity = typological_sim(subdata, Var1, Var2)) %>%
-                 mutate(Area = subdata$Area[1])})
+                 mutate(similarity = typological_sim(subdata, Var1, Var2))}, 
+          .id = "Area")
+                 # mutate(Area = subdata$Area[1])})
 ```
 
 
